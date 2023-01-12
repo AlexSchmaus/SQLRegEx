@@ -1,2 +1,16 @@
 
 obj/Debug/SQLRegEx.sqlprojAssemblyReference.cache
+.vs/slnx.sqlite
+.vs/SQLRegEx/v15/.ssms_suo
+.vs/SQLRegEx/v16/.suo
+bin/Debug/SQLRegEx.dacpac
+bin/Debug/SQLRegEx.dll
+bin/Debug/SQLRegEx.pdb
+.vs/SQLRegEx/v16/.suo
+obj/Debug/Model.xml
+obj/Debug/SQLRegEx.dll
+obj/Debug/SQLREGEX.generated.sql
+obj/Debug/SQLRegEx.pdb
+obj/Debug/SQLRegEx.sqlproj.FileListAbsolute.txt
+obj/Debug/SQLRegEx.sqlprojAssemblyReference.cache
+SQLRegEx.sqlproj
