@@ -26,6 +26,7 @@ GO
 
 -- cleanup past tests
 DROP FUNCTION IF EXISTS CLR_isRegexMatch
+DROP FUNCTION IF EXISTS CLR_returnRegexMatches
 GO
 DROP ASSEMBLY IF EXISTS RegexFuncions
 DROP ASSEMBLY IF EXISTS RegexFunctions
@@ -43,6 +44,11 @@ RETURNS bit
 EXTERNAL NAME RegexFunctions.UserDefinedFunctions.isRegexMatch
 GO
 
+CREATE FUNCTION CLR_returnRegexMatches(@str nvarchar(4000), @pattern nvarchar(512))
+RETURNS TABLE ([index] int, [group] nvarchar(4000), [value] nvarchar(4000))
+EXTERNAL NAME RegexFunctions.UserDefinedFunctions.returnRegexMatches
+GO
+
 
 -- Test!
 SELECT
@@ -52,3 +58,6 @@ SELECT
 	dbo.CLR_isRegexMatch('Bob Dole','((?<m>\d{1,2})\/(?<d>\d{1,2})\/(?<y>\d{4}|\d{2}))'),	-- Should return 0
 	dbo.CLR_isRegexMatch('11/1/91','((?<m>\d{1,2})\/(?<d>\d{1,2})\/(?<y>\d{4}|\d{2}))')		-- Should return 1
 
+SELECT
+	*
+FROM dbo.CLR_returnRegexMatches('11/1/91','((?<m>\d{1,2})\/(?<d>\d{1,2})\/(?<y>\d{4}|\d{2}))')
