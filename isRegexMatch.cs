@@ -26,20 +26,15 @@ public partial class UserDefinedFunctions
     // Function with two params, str, and pattern. 
     public static SqlBoolean isRegexMatch(SqlString str, SqlString pattern)
     {
-        // declare the return
-        SqlBoolean r;
-
         // Create regx object, with the provided pattern. convert the SqlString to a string
         Regex rx = new Regex((string)pattern);
         
         // check to see if its a match!
         if (rx.IsMatch((string)str)) {
-            r = true;
+            return (SqlBoolean)true;
         }
         else {
-            r = false;
+            return (SqlBoolean)false;
         }
-        
-        return r;
     }
 }
