@@ -45,7 +45,7 @@ EXTERNAL NAME RegexFunctions.UserDefinedFunctions.isRegexMatch
 GO
 
 CREATE FUNCTION CLR_returnRegexMatches(@str nvarchar(4000), @pattern nvarchar(512))
-RETURNS TABLE ([index] int, [group] nvarchar(4000), [value] nvarchar(4000))
+RETURNS TABLE ([index] int, [group] nvarchar(4000), [value] nvarchar(4000))	-- index is 0 index'd
 EXTERNAL NAME RegexFunctions.UserDefinedFunctions.returnRegexMatches
 GO
 
@@ -60,4 +60,4 @@ SELECT
 
 SELECT
 	*
-FROM dbo.CLR_returnRegexMatches('11/1/91','((?<m>\d{1,2})\/(?<d>\d{1,2})\/(?<y>\d{4}|\d{2}))')
+FROM dbo.CLR_returnRegexMatches('abcdef','\w{1}')	-- should return 6 rows
