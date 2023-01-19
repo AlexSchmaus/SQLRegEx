@@ -27,14 +27,14 @@ public partial class UserDefinedFunctions
 
         // .Matches() returns a collection of match objects -> https://learn.microsoft.com/en-us/dotnet/api/system.text.regularexpressions.match?view=net-7.0
         MatchCollection Matches = rx.Matches((string)str);
-        var keys = rx.GetGroupNames;    //get the capture groups
+        var keys = rx.GetGroupNames();    //get the capture groups
         Collection<MatchData> md = new Collection<MatchData>();
 
         foreach (Match m in Matches)
         {
             foreach (string k in keys)
             {
-                md.Add(new MatchData(m, k);
+                md.Add(new MatchData(m, k));
             }
         }
 
