@@ -81,12 +81,31 @@ FROM dbo.CLR_returnRegexMatches('11/1/92 2/24/02 7/8/99','(?<month>\d{1,2})\/(?<
 
 
 -- Function 3 - returnRegexCaptures (capture group values)
+SELECT
+	*
+FROM dbo.CLR_returnRegexCaptures('My cat hans has a fluffy tail', '[\w ]+')
+
+SELECT
+	*
+FROM dbo.CLR_returnRegexCaptures('My cat hans has a fluffy tail', '([\w ]+)')
+
+SELECT
+	*
+FROM dbo.CLR_returnRegexCaptures('My cat hans has a fluffy tail', '(([\w ]+))')
+
 -- Should return a row for each word
 SELECT
 	*
 FROM dbo.CLR_returnRegexCaptures('Hello World, Alex','(?<word>\w{2,})')
 
+-- 9 rows, 3 months, 3 days, 3 years
 SELECT 
 	*
-FROM dbo.CLR_returnRegexCaptures('11/1/92 2/24/02 7/8/99','(?<month>\d{1,2})\/(?<day>\d{1,2})\/(?<year>\d{2})')
+FROM dbo.CLR_returnRegexCaptures('11/1/92 2/24/02 7/8/1999','(?<month>\d{1,2})\/(?<day>\d{1,2})\/(?<year>\d{2,4})')
 
+-- 12 rows - 3 dates, 3 months, 3 days, 3 years
+SELECT 
+	*
+FROM dbo.CLR_returnRegexCaptures('11/1/92 2/24/02 7/8/1999','(?<date>(?<month>\d{1,2})\/(?<day>\d{1,2})\/(?<year>\d{2,4}))')
+
+-- 11/1/92 2/24/02 7/8/99 12/20/2000 5/6/2007 10/30/79

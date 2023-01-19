@@ -40,7 +40,7 @@ public partial class UserDefinedFunctions
                 if (k == "0" & keys.Length > 1){
                     continue;
                 }
-                md.Add(new MatchData(m, k == "0" ? null : k));
+                md.Add(new MatchData(m, k)); //k == "0" ? null : k//
             }
         }
 
