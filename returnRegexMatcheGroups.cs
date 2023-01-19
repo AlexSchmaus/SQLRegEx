@@ -30,11 +30,17 @@ public partial class UserDefinedFunctions
         var keys = rx.GetGroupNames();    //get the capture groups
         Collection<MatchData> md = new Collection<MatchData>();
 
+        
         foreach (Match m in Matches)
         {
             foreach (string k in keys)
             {
-                md.Add(new MatchData(m, k));
+                
+                // remove the '0' capture group, if there are other capture groups present
+                if (k == "0" & keys.Length > 1){
+                    continue;
+                }
+                md.Add(new MatchData(m, k == "0" ? null : k));
             }
         }
 

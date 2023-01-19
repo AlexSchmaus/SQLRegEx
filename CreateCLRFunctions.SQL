@@ -55,7 +55,9 @@ RETURNS TABLE ([match] nvarchar(4000), [matchIndex] int, [group] nvarchar(4000),
 EXTERNAL NAME RegexFunctions.UserDefinedFunctions.returnRegexCaptures
 GO
 
--- Test!
+-- Test! --
+
+-- Function 1 - isRegexMatch
 SELECT
 	dbo.CLR_isRegexMatch('Hello World', 'H'),												-- Should return 1 (true)
 	dbo.CLR_isRegexMatch('Hello World', '/d'),												-- Should return 0
@@ -63,11 +65,28 @@ SELECT
 	dbo.CLR_isRegexMatch('Bob Dole','((?<m>\d{1,2})\/(?<d>\d{1,2})\/(?<y>\d{4}|\d{2}))'),	-- Should return 0
 	dbo.CLR_isRegexMatch('11/1/91','((?<m>\d{1,2})\/(?<d>\d{1,2})\/(?<y>\d{4}|\d{2}))')		-- Should return 1
 
-SELECT
-	*
-FROM dbo.CLR_returnRegexMatches('abcdef','(?<grp>\w{1})')	-- should return 6 rows
 
+
+-- Function 2 - returnRegexMatches
+-- should return 6 rows, each letter is a match
+SELECT 
+	*
+FROM dbo.CLR_returnRegexMatches('abcdef','(?<grp>\w{1})')	
+
+-- Should return 3 rows, each date is a match
 SELECT
 	*
-FROM dbo.CLR_returnRegexCaptures('Hello World Alex','(?<word>(?<char>\w){2,})')
+FROM dbo.CLR_returnRegexMatches('11/1/92 2/24/02 7/8/99','(?<month>\d{1,2})\/(?<day>\d{1,2})\/(?<year>\d{2})')
+
+
+
+-- Function 3 - returnRegexCaptures (capture group values)
+-- Should return a row for each word
+SELECT
+	*
+FROM dbo.CLR_returnRegexCaptures('Hello World, Alex','(?<word>\w{2,})')
+
+SELECT 
+	*
+FROM dbo.CLR_returnRegexCaptures('11/1/92 2/24/02 7/8/99','(?<month>\d{1,2})\/(?<day>\d{1,2})\/(?<year>\d{2})')
 
