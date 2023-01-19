@@ -27,17 +27,14 @@ public partial class UserDefinedFunctions
 
         // .Matches() returns a collection of match objects -> https://learn.microsoft.com/en-us/dotnet/api/system.text.regularexpressions.match?view=net-7.0
         MatchCollection Matches = rx.Matches((string)str);
+        var keys = rx.GetGroupNames;    //get the capture groups
         Collection<MatchData> md = new Collection<MatchData>();
 
-        foreach (Match mch in Matches)
+        foreach (Match m in Matches)
         {
-            foreach (Group grp in mch.Groups)
+            foreach (string k in keys)
             {
-                foreach (Capture cap in grp.Captures)
-                {
-                    md.Add(new MatchData(mch, grp, cap));
-                }
-
+                md.Add(new MatchData(m, k);
             }
         }
 
@@ -61,13 +58,25 @@ public partial class UserDefinedFunctions
         public string groupName;
         public string capturedValue;
 
+        public MatchData(Match match, string group)
+        {
+            this.match = match.Value;
+            this.matchIndex = match.Index;
+            this.groupName = group;
+            this.capturedValue = match.Groups[group].Value;
+        }
+
         public MatchData(Match match, Group group, Capture capture)
         {
             this.match = match.Value;
             this.matchIndex = match.Index;
-            this.groupName = "x";//group.Name;
+            // group.Name is not useable with SQL CLR....
+            this.groupName = null; //group.Name
             this.capturedValue = capture.Value;
         }
+
+
+
     }
 
 
