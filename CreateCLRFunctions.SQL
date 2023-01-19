@@ -25,6 +25,7 @@ GO
 */
 
 -- cleanup past tests
+DROP FUNCTION IF EXISTS CLR_isRegexPattern
 DROP FUNCTION IF EXISTS CLR_isRegexMatch
 DROP FUNCTION IF EXISTS CLR_returnRegexMatches
 DROP FUNCTION IF EXISTS CLR_returnRegexCaptures
@@ -37,12 +38,17 @@ GO
 CREATE ASSEMBLY RegexFunctions FROM 'C:\SQL_CLR\SQLRegEx.dll'
 GO
 
--- Create the function
+-- Create the functions
 -- SqlString in CLR = nvarchar NOT varchar
 CREATE FUNCTION CLR_isRegexMatch(@str nvarchar(2048), @pattern nvarchar(512))
 RETURNS bit
 -- name is AssemblyName.NamespaceName.FunctionName
 EXTERNAL NAME RegexFunctions.UserDefinedFunctions.isRegexMatch
+GO
+
+CREATE FUNCTION CLR_isRegexPattern(@pattern nvarchar(4000))
+RETURNS bit
+EXTERNAL NAME RegexFunctions.UserDefinedFunctions.isRegexPattern
 GO
 
 CREATE FUNCTION CLR_returnRegexMatches(@str nvarchar(4000), @pattern nvarchar(512))
