@@ -18,7 +18,7 @@ public partial class UserDefinedFunctions
     [Microsoft.SqlServer.Server.SqlFunction(
         Name = "CLR_returnRegexMatches",
         FillRowMethodName = "FillRow",
-        TableDefinition = "index int, group nvarchar(4000), value nvarchar(4000)"
+        TableDefinition = "index int, value nvarchar(4000)"
         )]
     public static IEnumerable returnRegexMatches(SqlString str, SqlString pattern)
     {
@@ -31,11 +31,10 @@ public partial class UserDefinedFunctions
 
     }
 
-    public static void FillRow(Object obj, out SqlInt32 index, out SqlString group, out SqlString value)
+    public static void FillRow(Object obj, out SqlInt32 index, out SqlString value)
     {
         Match match = (Match)obj;
         index = (SqlInt32)match.Index;
-        group = (SqlString)match.Groups.ToString();
         value = (SqlString)match.Value;
     }
 

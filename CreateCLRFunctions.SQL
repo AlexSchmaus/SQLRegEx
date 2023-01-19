@@ -27,6 +27,7 @@ GO
 -- cleanup past tests
 DROP FUNCTION IF EXISTS CLR_isRegexMatch
 DROP FUNCTION IF EXISTS CLR_returnRegexMatches
+DROP FUNCTION IF EXISTS CLR_returnRegexCaptures
 GO
 DROP ASSEMBLY IF EXISTS RegexFuncions
 DROP ASSEMBLY IF EXISTS RegexFunctions
@@ -45,10 +46,14 @@ EXTERNAL NAME RegexFunctions.UserDefinedFunctions.isRegexMatch
 GO
 
 CREATE FUNCTION CLR_returnRegexMatches(@str nvarchar(4000), @pattern nvarchar(512))
-RETURNS TABLE ([index] int, [group] nvarchar(4000), [value] nvarchar(4000))	-- index is 0 index'd
+RETURNS TABLE ([index] int, [value] nvarchar(4000))	-- index is 0 index'd
 EXTERNAL NAME RegexFunctions.UserDefinedFunctions.returnRegexMatches
 GO
 
+CREATE FUNCTION CLR_returnRegexCaptures(@str nvarchar(4000), @pattern nvarchar(512))
+RETURNS TABLE ([match] nvarchar(4000), [matchIndex] int, [group] nvarchar(4000), [value] nvarchar(4000))
+EXTERNAL NAME RegexFunctions.UserDefinedFunctions.returnRegexCaptures
+GO
 
 -- Test!
 SELECT
@@ -60,4 +65,9 @@ SELECT
 
 SELECT
 	*
-FROM dbo.CLR_returnRegexMatches('abcdef','\w{1}')	-- should return 6 rows
+FROM dbo.CLR_returnRegexMatches('abcdef','(?<grp>\w{1})')	-- should return 6 rows
+
+SELECT
+	*
+FROM dbo.CLR_returnRegexCaptures('Hello World Alex','(?<word>(?<char>\w){2,})')
+

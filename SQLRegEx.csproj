@@ -44,6 +44,7 @@
     <Content Include="CreateCLRFunctions.SQL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="returnRegexMatcheGroups.cs" />
     <Compile Include="returnRegexMatches.cs" />
     <Compile Include="isRegexMatch.cs" />
   </ItemGroup>
